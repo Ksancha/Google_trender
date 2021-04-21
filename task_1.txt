@@ -1,0 +1,7 @@
+SELECT Total.Request_at, Cancelled, Total, round((CAST(Cancelled as REAL)/Total), 2) AS Cancellation_Rate FROM (SELECT Count(Trips.Id) AS Total, Trips.Request_at
+FROM Users AS Drivers INNER JOIN (Trips INNER JOIN Users AS Clients ON Trips.Client_Id = Clients.Users_Id) ON Drivers.Users_Id = Trips.Driver_Id
+WHERE Clients.Banned="No" AND Drivers.Banned="No"
+GROUP BY Trips.Request_at) AS Total LEFT JOIN (SELECT Count(Trips.Id) AS Cancelled, Trips.Request_at
+FROM Users AS Drivers INNER JOIN (Trips INNER JOIN Users AS Clients ON Trips.Client_Id = Clients.Users_Id) ON Drivers.Users_Id = Trips.Driver_Id
+WHERE Clients.Banned="No" AND Drivers.Banned="No" AND Trips.Status!="completed"
+GROUP BY Trips.Request_at) AS Cancelled ON Total.Request_at = Cancelled.Request_at

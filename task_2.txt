@@ -1,0 +1,2 @@
+SELECT E3.Name, E3.Salary, Department.Name From (SELECT E1.DepartmentId, Name, Salary FROM Employee AS E1 LEFT JOIN (SELECT DepartmentId, (SELECT DISTINCT(Salary) FROM Employee t2 WHERE t2.DepartmentId = t1.DepartmentId ORDER BY Salary DESC LIMIT 2, 1) AS Salary_limit
+FROM Employee as t1 GROUP BY DepartmentId) AS E2 ON E1.DepartmentId == E2.DepartmentId WHERE Salary > Salary_limit OR Salary_limit IS NULL) AS E3 LEFT JOIN Department ON Department.Id == E3.DepartmentId
