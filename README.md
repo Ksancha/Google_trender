@@ -24,4 +24,6 @@ See example.py on how to operate with the runner.
 
 6) Data on S3 is partitioned by year/month/day/hour/search_term
 
+7) Use now_ts in the payload to allow re-running tasks
+ 
 
